@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "site": "rishu-singh-portfolio-2026",
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "firebase-debug.log",
+      ".firebaserc"
+    ]
+  }
+}

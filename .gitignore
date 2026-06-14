@@ -1,0 +1,7 @@
+# Logs and debugs
+firebase-debug.log
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
