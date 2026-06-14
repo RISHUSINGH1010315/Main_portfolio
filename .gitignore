@@ -2,6 +2,10 @@
 firebase-debug.log
 *.log
 
+# Firebase cache
+.firebase/
+.firebase
+
 # OS files
 .DS_Store
 Thumbs.db
