@@ -260,6 +260,64 @@
                 box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
             }
         }
+
+        /* 3D Stack View Styling */
+        .projects-stack-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 580px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            perspective: 1000px;
+        }
+
+        .projects-stack-container .project-card {
+            position: absolute;
+            width: 100%;
+            max-width: 440px;
+            height: auto;
+            transform-style: preserve-3d;
+            will-change: transform, opacity;
+            user-select: none;
+            cursor: grab;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease, z-index 0.5s ease;
+        }
+
+        .projects-stack-container .project-card:active {
+            cursor: grabbing;
+        }
+
+        .projects-stack-container .project-card.swiped {
+            pointer-events: none;
+            transition: transform 0.6s cubic-bezier(0.1, 0.8, 0.25, 1), opacity 0.6s ease;
+        }
+
+        /* Stack control buttons */
+        .stack-nav-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-surface-variant);
+            color: var(--color-on-surface);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .stack-nav-btn:hover {
+            background: var(--color-primary);
+            color: var(--color-on-primary);
+            transform: scale(1.1);
+        }
+
+        .stack-nav-btn:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body class="bg-background text-on-background font-body-md overflow-x-hidden transition-colors duration-300">
@@ -549,20 +607,32 @@
                         <p class="text-on-surface-variant text-[15px]">Interactive grid of products designed for responsive scale and client-side speeds.</p>
                     </div>
 
-                    <!-- Category Filter Buttons -->
-                    <div class="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-surface-variant/30 border border-outline-variant/10 w-fit">
-                        <button data-filter="all" class="filter-btn px-5 py-2 rounded-xl text-[12px] font-bold tracking-wider uppercase transition-all bg-primary text-on-primary">
-                            All Projects
-                        </button>
-                        <button data-filter="web" class="filter-btn px-5 py-2 rounded-xl text-[12px] font-bold tracking-wider uppercase transition-all bg-secondary-container/50 text-on-surface-variant hover:text-primary">
-                            Web Dev
-                        </button>
-                        <button data-filter="ai" class="filter-btn px-5 py-2 rounded-xl text-[12px] font-bold tracking-wider uppercase transition-all bg-secondary-container/50 text-on-surface-variant hover:text-primary">
-                            AI & ML
-                        </button>
-                        <button data-filter="ui" class="filter-btn px-5 py-2 rounded-xl text-[12px] font-bold tracking-wider uppercase transition-all bg-secondary-container/50 text-on-surface-variant hover:text-primary">
-                            Creative UI
-                        </button>
+                    <div class="flex flex-wrap items-center gap-4">
+                        <!-- Category Filter Buttons -->
+                        <div class="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-surface-variant/30 border border-outline-variant/10 w-fit">
+                            <button data-filter="all" class="filter-btn px-5 py-2 rounded-xl text-[12px] font-bold tracking-wider uppercase transition-all bg-primary text-on-primary">
+                                All Projects
+                            </button>
+                            <button data-filter="web" class="filter-btn px-5 py-2 rounded-xl text-[12px] font-bold tracking-wider uppercase transition-all bg-secondary-container/50 text-on-surface-variant hover:text-primary">
+                                Web Dev
+                            </button>
+                            <button data-filter="ai" class="filter-btn px-5 py-2 rounded-xl text-[12px] font-bold tracking-wider uppercase transition-all bg-secondary-container/50 text-on-surface-variant hover:text-primary">
+                                AI & ML
+                            </button>
+                            <button data-filter="ui" class="filter-btn px-5 py-2 rounded-xl text-[12px] font-bold tracking-wider uppercase transition-all bg-secondary-container/50 text-on-surface-variant hover:text-primary">
+                                Creative UI
+                            </button>
+                        </div>
+
+                        <!-- View Toggle Buttons -->
+                        <div class="flex items-center gap-1.5 p-1.5 rounded-2xl bg-surface-variant/30 border border-outline-variant/10 w-fit">
+                            <button id="view-stack" class="px-4 py-2 rounded-xl text-[12px] font-bold uppercase transition-all bg-primary text-on-primary flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-[16px]">layers</span> Stack View
+                            </button>
+                            <button id="view-grid" class="px-4 py-2 rounded-xl text-[12px] font-bold uppercase transition-all bg-secondary-container/50 text-on-surface-variant hover:text-primary flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-[16px]">grid_view</span> Grid View
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -889,6 +959,19 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Stack Navigation Controls -->
+                <div id="stack-controls" class="flex justify-center items-center gap-6 mt-10">
+                    <button id="stack-prev" class="stack-nav-btn" aria-label="Swipe Left">
+                        <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+                    </button>
+                    <span class="text-on-surface-variant text-[13px] font-bold tracking-wider uppercase select-none">
+                        Drag card or use buttons
+                    </span>
+                    <button id="stack-next" class="stack-nav-btn" aria-label="Swipe Right">
+                        <span class="material-symbols-outlined text-[24px]">arrow_forward</span>
+                    </button>
                 </div>
             </div>
         </section>
@@ -1563,41 +1646,283 @@
             observer.observe(element);
         });
 
-        // 7. Interactive Projects Category Filtering
+        // 7. Interactive Projects Swapping Card Stack / Grid View
+        let isStackView = true; // default view is Stack
+        const projectsGrid = document.getElementById('projects-grid');
+        const originalGridClasses = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter";
         const filterBtns = document.querySelectorAll('.filter-btn');
         const projectCards = document.querySelectorAll('.project-card');
+        let activeCards = [];
+        let currentFilter = 'all';
 
+        // Drag/Swipe state variables
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let currentX = 0;
+        let currentY = 0;
+        let topCardEl = null;
+
+        function updateProjectView() {
+            if (isStackView) {
+                // Configure Stack View classes
+                projectsGrid.className = "projects-stack-container";
+                document.getElementById('stack-controls').classList.remove('hidden');
+                document.getElementById('stack-controls').classList.add('flex');
+                
+                // Set initial styles for all cards in stack
+                initStack();
+            } else {
+                // Configure Grid View classes
+                projectsGrid.className = originalGridClasses;
+                document.getElementById('stack-controls').classList.add('hidden');
+                document.getElementById('stack-controls').classList.remove('flex');
+                
+                // Reset card styles to grid styles
+                projectCards.forEach(card => {
+                    card.style.transform = '';
+                    card.style.opacity = '';
+                    card.style.zIndex = '';
+                    card.style.pointerEvents = '';
+                    card.className = "project-card glass-card rounded-2xl overflow-hidden group flex flex-col h-full glow-card border border-outline-variant/30 transition-all duration-300";
+                    
+                    // Show or hide based on current filter
+                    const cardCategories = card.getAttribute('data-category').split(',');
+                    if (currentFilter === 'all' || cardCategories.includes(currentFilter)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Remove swipe listeners
+                removeDragListeners();
+            }
+        }
+
+        function initStack() {
+            // Get all cards matching current filter
+            activeCards = Array.from(projectCards).filter(card => {
+                const cardCategories = card.getAttribute('data-category').split(',');
+                return currentFilter === 'all' || cardCategories.includes(currentFilter);
+            });
+
+            // Hide cards that don't match
+            projectCards.forEach(card => {
+                if (!activeCards.includes(card)) {
+                    card.style.display = 'none';
+                    card.style.opacity = '0';
+                }
+            });
+
+            arrangeStack();
+            setupDragListeners();
+        }
+
+        function arrangeStack() {
+            activeCards.forEach((card, index) => {
+                card.className = "project-card glass-card rounded-2xl overflow-hidden group flex flex-col h-full glow-card border border-outline-variant/30";
+                card.style.display = 'flex';
+                
+                if (index === 0) {
+                    // Top Card
+                    card.style.transform = 'translate3d(0, 0, 0) scale(1) rotate(0deg)';
+                    card.style.zIndex = '30';
+                    card.style.opacity = '1';
+                    card.style.pointerEvents = 'auto';
+                } else if (index === 1) {
+                    // Second Card
+                    card.style.transform = 'translate3d(0, 18px, -20px) scale(0.95)';
+                    card.style.zIndex = '20';
+                    card.style.opacity = '0.9';
+                    card.style.pointerEvents = 'none';
+                } else if (index === 2) {
+                    // Third Card
+                    card.style.transform = 'translate3d(0, 36px, -40px) scale(0.9)';
+                    card.style.zIndex = '10';
+                    card.style.opacity = '0.75';
+                    card.style.pointerEvents = 'none';
+                } else {
+                    // Back/Hidden Cards
+                    card.style.transform = 'translate3d(0, 54px, -60px) scale(0.85)';
+                    card.style.zIndex = '0';
+                    card.style.opacity = '0';
+                    card.style.pointerEvents = 'none';
+                }
+            });
+        }
+
+        // Drag/Swipe Handlers
+        function setupDragListeners() {
+            removeDragListeners(); // Clean up old listeners
+            if (activeCards.length === 0) return;
+            
+            topCardEl = activeCards[0];
+            topCardEl.addEventListener('mousedown', startDrag);
+            topCardEl.addEventListener('touchstart', startDrag, { passive: true });
+        }
+
+        function removeDragListeners() {
+            if (topCardEl) {
+                topCardEl.removeEventListener('mousedown', startDrag);
+                topCardEl.removeEventListener('touchstart', startDrag);
+                topCardEl = null;
+            }
+            window.removeEventListener('mousemove', drag);
+            window.removeEventListener('touchmove', drag);
+            window.removeEventListener('mouseup', endDrag);
+            window.removeEventListener('touchend', endDrag);
+        }
+
+        function startDrag(e) {
+            if (!isStackView || activeCards.length === 0) return;
+            isDragging = true;
+            
+            const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+            
+            startX = clientX;
+            startY = clientY;
+            currentX = 0;
+            currentY = 0;
+            
+            if (topCardEl) {
+                topCardEl.style.transition = 'none';
+            }
+            
+            window.addEventListener('mousemove', drag);
+            window.addEventListener('touchmove', drag, { passive: false });
+            window.addEventListener('mouseup', endDrag);
+            window.addEventListener('touchend', endDrag);
+        }
+
+        function drag(e) {
+            if (!isDragging || !topCardEl) return;
+            
+            // Prevent default touch scrolling when swiping card
+            if (e.type === 'touchmove') e.preventDefault();
+            
+            const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+            
+            currentX = clientX - startX;
+            currentY = clientY - startY;
+            
+            const rotate = currentX * 0.12;
+            topCardEl.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) scale(1) rotate(${rotate}deg)`;
+        }
+
+        function endDrag() {
+            if (!isDragging || !topCardEl) return;
+            isDragging = false;
+            
+            window.removeEventListener('mousemove', drag);
+            window.removeEventListener('touchmove', drag);
+            window.removeEventListener('mouseup', endDrag);
+            window.removeEventListener('touchend', endDrag);
+            
+            const swipeThreshold = 130;
+            
+            if (Math.abs(currentX) > swipeThreshold) {
+                // Swipe Out
+                const direction = currentX > 0 ? 1 : -1;
+                swipeCard(direction);
+            } else {
+                // Snap Back
+                topCardEl.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                topCardEl.style.transform = 'translate3d(0, 0, 0) scale(1) rotate(0deg)';
+            }
+        }
+
+        function swipeCard(direction) {
+            if (activeCards.length === 0 || !topCardEl) return;
+            
+            const cardToSwipe = topCardEl;
+            cardToSwipe.classList.add('swiped');
+            cardToSwipe.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
+            
+            // Fly off screen
+            const flyX = direction * (window.innerWidth > 600 ? 600 : 400);
+            const rotate = direction * 25;
+            cardToSwipe.style.transform = `translate3d(${flyX}px, ${currentY}px, 0) rotate(${rotate}deg)`;
+            cardToSwipe.style.opacity = '0';
+            
+            // Re-arrange stack
+            const swipedCard = activeCards.shift(); // Remove top
+            activeCards.push(swipedCard); // Add to bottom
+            
+            setTimeout(() => {
+                cardToSwipe.classList.remove('swiped');
+                arrangeStack();
+                setupDragListeners();
+            }, 300);
+        }
+
+        // Setup click listeners for Stack Nav Controls programmatically
+        document.getElementById('stack-prev').addEventListener('click', () => {
+            currentY = 0; // reset drag Y
+            swipeCard(-1);
+        });
+        document.getElementById('stack-next').addEventListener('click', () => {
+            currentY = 0; // reset drag Y
+            swipeCard(1);
+        });
+
+        // View toggle events
+        document.getElementById('view-stack').addEventListener('click', () => {
+            if (isStackView) return;
+            isStackView = true;
+            document.getElementById('view-stack').classList.replace('bg-secondary-container/50', 'bg-primary');
+            document.getElementById('view-stack').classList.replace('text-on-surface-variant', 'text-on-primary');
+            document.getElementById('view-grid').classList.replace('bg-primary', 'bg-secondary-container/50');
+            document.getElementById('view-grid').classList.replace('text-on-primary', 'text-on-surface-variant');
+            updateProjectView();
+        });
+
+        document.getElementById('view-grid').addEventListener('click', () => {
+            if (!isStackView) return;
+            isStackView = false;
+            document.getElementById('view-grid').classList.replace('bg-secondary-container/50', 'bg-primary');
+            document.getElementById('view-grid').classList.replace('text-on-surface-variant', 'text-on-primary');
+            document.getElementById('view-stack').classList.replace('bg-primary', 'bg-secondary-container/50');
+            document.getElementById('view-stack').classList.replace('text-on-primary', 'text-on-surface-variant');
+            updateProjectView();
+        });
+
+        // Initialize view
+        updateProjectView();
+
+        // Filter button overrides
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Remove active classes
+                // Update styling of buttons
                 filterBtns.forEach(b => {
                     b.classList.remove('bg-primary', 'text-on-primary');
                     b.classList.add('bg-secondary-container/50', 'text-on-surface-variant');
                 });
-                
-                // Add active state to this button
                 btn.classList.remove('bg-secondary-container/50', 'text-on-surface-variant');
                 btn.classList.add('bg-primary', 'text-on-primary');
 
-                const filter = btn.getAttribute('data-filter');
-
-                projectCards.forEach(card => {
-                    const cardCategories = card.getAttribute('data-category').split(',');
-                    
-                    if (filter === 'all' || cardCategories.includes(filter)) {
-                        card.style.display = 'flex';
-                        setTimeout(() => {
+                currentFilter = btn.getAttribute('data-filter');
+                
+                if (isStackView) {
+                    initStack();
+                } else {
+                    projectCards.forEach(card => {
+                        const cardCategories = card.getAttribute('data-category').split(',');
+                        if (currentFilter === 'all' || cardCategories.includes(currentFilter)) {
+                            card.style.display = 'flex';
                             card.style.opacity = '1';
                             card.style.transform = 'scale(1)';
-                        }, 50);
-                    } else {
-                        card.style.opacity = '0';
-                        card.style.transform = 'scale(0.96)';
-                        setTimeout(() => {
-                            card.style.display = 'none';
-                        }, 300);
-                    }
-                });
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'scale(0.96)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                }
             });
         });
 
