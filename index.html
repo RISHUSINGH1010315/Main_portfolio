@@ -466,6 +466,34 @@
             </div>
         </section>
 
+        <!-- Download Resume Section -->
+        <section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-section-gap reveal-element" id="download-resume">
+            <div class="glass-card p-8 md:p-14 rounded-[2.5rem] relative overflow-hidden border border-outline-variant/30 text-center flex flex-col items-center justify-center gap-6 shadow-xl">
+                <!-- Background visual details -->
+                <div class="absolute -top-12 -left-12 size-40 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-12 -right-12 size-40 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <span class="material-symbols-outlined text-primary text-[64px] animate-bounce">download_for_offline</span>
+                
+                <h2 class="text-headline-md md:text-headline-xl font-bold tracking-tight text-on-surface">Get a Copy of My Resume</h2>
+                
+                <p class="text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
+                    View my full professional timeline, technical skillset breakdown, and project engineering details directly on a print-ready PDF resume.
+                </p>
+                
+                <div class="flex flex-wrap gap-4 mt-2 justify-center">
+                    <a href="assets/Rishu_Singh_Resume.pdf" download="Rishu_Singh_Resume.pdf" class="bg-primary text-on-primary px-8 py-4 rounded-xl font-bold flex items-center gap-2.5 hover:bg-primary-hover hover:-translate-y-0.5 transition-all shadow-lg shadow-primary/25">
+                        <span class="material-symbols-outlined text-[20px]">download</span>
+                        Download Resume PDF
+                    </a>
+                    <button onclick="openResumeModal()" class="glass-card px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-surface-variant transition-all text-on-surface">
+                        <span class="material-symbols-outlined text-[20px]">visibility</span>
+                        View Summary Online
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!-- Technical Arsenal Section -->
         <section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-section-gap reveal-element" id="skills">
             <div class="flex flex-col gap-stack-lg">
@@ -1432,7 +1460,7 @@
             <!-- Modal Actions -->
             <div class="p-5 bg-surface-variant/20 border-t border-outline-variant/20 flex items-center justify-end gap-3">
                 <button onclick="closeResumeModal()" class="px-5 py-2.5 rounded-xl text-[13px] text-on-surface hover:bg-surface-variant font-bold transition-all">Cancel</button>
-                <a href="https://drive.google.com/file/d/1X5XgT6kO2Uq_4oZ_uGkG-L9-4V4H7P9F/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:bg-primary-hover shadow-lg shadow-primary/20 transition-all text-[13px]">
+                <a href="assets/Rishu_Singh_Resume.pdf" download="Rishu_Singh_Resume.pdf" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:bg-primary-hover shadow-lg shadow-primary/20 transition-all text-[13px]">
                     <span class="material-symbols-outlined text-[18px]">download_for_offline</span>
                     Get Full Resume
                 </a>
